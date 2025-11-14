@@ -37,14 +37,32 @@ function deleteAllTodos () {
 // get the todolist iten tag from the webpage
 let todolistContainer = document.querySelector("#todolist-items")
 
-function renderTodolist () {
+//delete todo-item event handler
+function handleDeleteTodo(eventInfo) {
+    //delete the todoitem from the array (call to the "backend fucktion")
+    
+    //delete the todoitem from the web page
+    console.log ("test delete")
+    console.log(eventInfo.target)
+}
 
-//empty the todolistContainer
-todolistContainer.innerHTML = ""
+function renderTodolist () {
+    
+    //empty the todolistContainer
+    todolistContainer.innerHTML = ""
     for (let index = 0; index < todolist.length; index = index + 1) {
-    //console.log(todolist[index])
-    todolistContainer.innerHTML += `<li>${readTodo(index)}</li>`
+        //console.log(todolist[index])
+        // we use array index value as id for todo items 
+        todolistContainer.innerHTML += `<li id="todo-item-${index}">${readTodo(index)}</li>`
+        // get the li tiem, and store it in a variable
+        let todoItemLiElement = document.querySelector(`#todo-item-${index}`)
+        // add click handler event listner
+        // todoItemLiElement.addEventListener("click", handleDeleteTodo)
     }
+
+    // add the event lstner on the "parent element"
+    todolistContainer.addEventListener("click",handleDeleteTodo)
+
 
 }
 
@@ -79,15 +97,11 @@ buttonAddTodo.addEventListener("click", handleAddTodoClick)
 
 
 function handleClearTodoListClick () {
+    // remove all todos from the array
     deleteAllTodos ()
+    // render the todolist again
     renderTodolist ()
 }
+
+
 buttonClearTodoList.addEventListener("click", handleClearTodoListClick)
-
-
-
-function handleAddTodoEnterKey () {
-    console.log (inputTodoText.value)
-}
-inputTodoText.addEventListener("keydown",handleAddTodoEnterKey)
-
